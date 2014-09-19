@@ -1,0 +1,38 @@
+MULTITHREADED
+
+public class ServerThread implements Runnable {
+	Socket client;
+	
+	public ServerThread(Socket c) {
+		client = c;
+	}
+		
+	public void run() {
+		// process 1 client's request
+		if(answer is correct) {
+			server.incrementCorrect();
+		}
+	}
+}
+
+public static void main(String[] args) throws IOException {
+	//...
+	public synchronized void incrementCorrect() {
+		c++;
+	}
+	
+	public synchronized int value() {
+		return c;
+	}
+	
+	ServerSocket server=null;
+	try {
+		// construct a server socket:
+		server = new ServerSocket(port);
+		
+		// loop "forever"
+		while(true) {
+			Socket client = server.accept();
+			(new Thread(new ServerThread(this, client))).start();
+		}
+}
