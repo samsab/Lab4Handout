@@ -11,16 +11,19 @@ public class Lab4Client {
 	public static final String AMP_NONE = "AMP NONE";
 	public static final String AMP_OK = "AMP OK";
 	public static final String AMP_ERROR = "AMP ERROR";
+	public static final String GET_STATUS = "GET STATUS";
+	public static final String AMP_STATUS = "AMP STATUS";
+	public static final String END_SESSION = "END SESSION";
 	
 	/**
-	 * Runs the Lab3Client.
+	 * Runs the Lab4Client.
 	 * 
 	 * @param args is an array containing each of the command-line arguments.
 	 * @throws IOException if there is a networking error.
 	 */
 	public static void main(String[] args) throws IOException {
 		if (args.length != 2) {
-			System.out.println("Usage: java Lab3Client <remote address> <remote port>");
+			System.out.println("Usage: java Lab4Client <remote address> <remote port>");
 			return;
 		}
 		

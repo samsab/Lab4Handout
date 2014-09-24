@@ -13,11 +13,15 @@ public class Lab4Server {
 	public static final String AMP_NONE = "AMP NONE";
 	public static final String AMP_OK = "AMP OK";
 	public static final String AMP_ERROR = "AMP ERROR";
+	public static final String GET_STATUS = "GET STATUS";
+	public static final String AMP_STATUS = "AMP STATUS";
+	public static final String END_SESSION = "END SESSION";
 	
 	public static void main(String[] args) throws IOException {
+		public int threads=0;
 		
 		if (args.length != 2) {
-			System.out.println("Usage: java Lab3Server <port> <n items>");
+			System.out.println("Usage: java Lab4Server <port> <n items>");
 			return;
 		}
 		
@@ -33,11 +37,12 @@ public class Lab4Server {
 		}
 		
 		try {
-			System.out.println("Lab3Server listening on: " + server.getLocalSocketAddress());
-			System.out.println("Lab3Server listening on:    " + InetAddress.getLocalHost().getHostAddress() + ":" + server.getLocalPort());
+			System.out.println("Lab4Server listening on: " + server.getLocalSocketAddress());
+			System.out.println("Lab4Server listening on:    " + InetAddress.getLocalHost().getHostAddress() + ":" + server.getLocalPort());
 
 			while(true) {
 				client = server.accept();
+				threads++;
 				
 				PrintWriter out = new PrintWriter(client.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -46,14 +51,14 @@ public class Lab4Server {
 				Double expectedAns=0.0;
 				int count=0;
 				int correct=0;
+				int incorrect=0;
 				
 				while((line = in.readLine()) != null) {
 					System.out.println("CLIENT REQUEST: " + line);
 					
 					if(line.startsWith(GET_WORK)) {
-						out.println(AMP_WORK);
-						
 						if(count < nwork) {
+							out.println(AMP_WORK);
 							String amp = MathProblem.generate();
 							out.println(amp);
 							
@@ -73,9 +78,15 @@ public class Lab4Server {
 						if(expectedAns == Double.parseDouble(answer)) {
 							System.out.println("  CORRECT");
 							++correct;
-						} else
+						} else {
 							System.out.println("  INCORRECT");
+							++incorrect;
+						}
 						System.out.println("  RESPONSE: OK");
+					} else if(line.startsWith(GET_STATUS)) {
+						out.println(AMP_STATUS);
+						
+						
 					} else {
 						out.println(AMP_ERROR);
 						System.out.println("  RESPONSE: ERROR");
